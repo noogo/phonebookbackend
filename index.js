@@ -1,4 +1,4 @@
-const express = require("express")
+const express = require('express')
 const app = express()
 app.use(express.static('build'))
 const cors = require('cors')
@@ -6,7 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 app.use(cors())
 app.use(express.json())
-const morgan = require("morgan")
+const morgan = require('morgan')
 const Person = require('./models/person')
 
 
@@ -53,7 +53,8 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', (req, res, next) => {
     const body = req.body
     Person.find({ name: body.name }).then(persons => {
-        if (persons.length !== 0) {
+        console.log(persons)
+        if (persons.length === 0) {
             const person = new Person({
                 name: body.name,
                 number: body.number
@@ -78,7 +79,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 })
 
 const unknownEndpoint = (req, res) => {
-    res.status(404).send({ error: "unknown point" })
+    res.status(404).send({ error: 'unknown point' })
 }
 app.use(unknownEndpoint)
 
